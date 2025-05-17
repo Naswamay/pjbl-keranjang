@@ -1,0 +1,131 @@
+<?php
+// Cek apakah form telah dikirim
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $phone     = $_POST['phone'] ?? '';
+  $provinsi  = $_POST['provinsi'] ?? '';
+  $kota      = $_POST['kota'] ?? '';
+  $kecamatan = $_POST['kecamatan'] ?? '';
+  $kodepos   = $_POST['kodepos'] ?? '';
+  $alamat    = $_POST['alamat'] ?? '';
+
+  // Simpan atau proses data di sini (misal: simpan ke database)
+
+  echo "<h3>Data Alamat Terkirim:</h3>";
+  echo "<ul>";
+  echo "<li><strong>No. Telepon:</strong> $phone</li>";
+  echo "<li><strong>Provinsi:</strong> $provinsi</li>";
+  echo "<li><strong>Kota/Kabupaten:</strong> $kota</li>";
+  echo "<li><strong>Kecamatan:</strong> $kecamatan</li>";
+  echo "<li><strong>Kode Pos:</strong> $kodepos</li>";
+  echo "<li><strong>Alamat:</strong> $alamat</li>";
+  echo "</ul><hr>";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daftar Alamat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #fff;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .location-box {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      color: #555;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .location-box span {
+      margin-left: 10px;
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: #67859c;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background-color: #557088;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Daftar Alamat</h2>
+
+  <form method="post" action="">
+    <div class="form-group">
+      <label for="phone">No. Telepon</label>
+      <input type="tel" id="phone" name="phone" value="(+62) 81234567891">
+    </div>
+
+    <div class="form-group">
+      <label for="provinsi">Provinsi</label>
+      <input type="text" id="provinsi" name="provinsi" placeholder="Pilih Provinsi">
+    </div>
+
+    <div class="form-group">
+      <label for="kota">Kota/Kabupaten</label>
+      <input type="text" id="kota" name="kota" placeholder="Pilih Kota/Kabupaten">
+    </div>
+
+    <div class="form-group">
+      <label for="kecamatan">Kecamatan</label>
+      <input type="text" id="kecamatan" name="kecamatan" placeholder="Masukkan Kecamatan">
+    </div>
+
+    <div class="form-group">
+      <label for="kodepos">Kode Pos</label>
+      <input type="text" id="kodepos" name="kodepos" placeholder="Masukkan Kode Pos">
+    </div>
+
+    <div class="form-group">
+      <label for="alamat">Alamat Lengkap</label>
+      <textarea id="alamat" name="alamat" rows="2" placeholder="Nama gedung, jalan dan lainnya...">Jl Sampangan No 8</textarea>
+    </div>
+
+    <div class="location-box">
+      📍 <span>Pilih Lokasi <br><small>Khusus untuk Go-Send, GrabExpress dan Mart Express</small></span>
+    </div>
+
+    <button type="submit" class="submit-btn">Kirim</button>
+  </form>
+
+</body>
+</html>

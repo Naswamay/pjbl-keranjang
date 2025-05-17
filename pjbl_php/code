@@ -1,0 +1,354 @@
+<?php
+$products = [
+  ["id" => 1, "name" => "Garam Cap Udang", "price" => 5500, "image" => "images/garam.jpg"],
+  ["id" => 2, "name" => "Mie Burung Dara", "price" => 5000, "image" => "images/mie.jpg"],
+  ["id" => 3, "name" => "Beras Ramos", "price" => 74000, "image" => "images/beras.jpg"],
+  ["id" => 4, "name" => "Minyak Kita", "price" => 15000, "image" => "images/minyak.jpg"],
+  ["id" => 5, "name" => "Tepung Segitiga Biru", "price" => 12000, "image" => "images/tepung.jpg"],
+  ["id" => 6, "name" => "Kecap Manis ABC", "price" => 9000, "addOn" => true, "image" => "images/kecap.jpg"],
+  ["id" => 7, "name" => "Sarden ABC", "price" => 10000, "addOn" => true, "image" => "images/sarden.jpg"],
+];
+function getTotal($products) {
+  $total = 0;
+  foreach ($products as $p) {
+    $total += $p['price'];
+  }
+  return $total;
+}
+?>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Keranjang Belanja</title>
+  <style>
+    .flash-message {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      z-index: 1000;
+    }
+    .flash-message.show {
+      opacity: 1;
+    }
+    .voucher-bayar-wrapper {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: calc(100% - 40px);
+      max-width: 350px;
+    }
+    .voucher-box {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    .voucher-icon {
+      width: 24px;
+      height: 24px;
+    }
+    .btn-bayar {
+      width: 100%;
+      padding: 12px 16px;
+      background-color: #2b7;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .btn-bayar:hover {
+      background-color: #1a5c3a;
+    }
+    .cart {
+      padding: 20px;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .cart-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-right: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="flash-message" id="flash-message">Metode pembayaran berhasil dipilih!</div>
+
+  <div class="cart">
+    <?php foreach ($products as $product): ?>
+      <div class="cart-item">
+        <img src="<?= $product['image'] ?>" alt="<?= $product['name'] ?>">
+        <div>
+          <div><?= $product['name'] ?></div>
+          <div>Rp<?= number_format($product['price'], 0, ',', '.') ?></div>
+        </div>
+      </div>
+    <?php endforeach; ?>
+    <h3>Total: Rp<span id="total"><?= number_format(getTotal($products), 0, ',', '.') ?></span></h3>
+  </div>
+
+  <div class="voucher-bayar-wrapper">
+    <div class="voucher-box" onclick="applyVoucher()">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <img src="cbdf1efd-4591-429b-95f6-fc185544b509.png" class="voucher-icon" alt="Voucher">
+        <span id="voucher-text">Gunakan Voucher</span>
+      </div>
+    </div>
+    <button class="btn-bayar" onclick="showFlashMessage('Pembayaran diproses...')">Bayar</button>
+  </div>
+
+  <script>
+    let voucherUsed = false;
+
+    function showFlashMessage(message) {
+      const flash = document.getElementById("flash-message");
+      flash.textContent = message;
+      flash.classList.add("show");
+      setTimeout(() => {
+        flash.classList.remove("show");
+      }, 3000);
+    }
+
+    function applyVoucher() {
+      if (!voucherUsed) {
+        const totalElem = document.getElementById("total");
+        const raw = totalElem ? totalElem.innerText.replace(/\D/g, '') : 0;
+        const total = parseInt(raw);
+        const discount = Math.floor(total * 0.1);
+        const newTotal = total - discount;
+
+        if (totalElem) totalElem.innerText = newTotal.toLocaleString("id-ID");
+
+        document.getElementById("voucher-text").innerText = "Voucher Digunakan (-10%)";
+        voucherUsed = true;
+        showFlashMessage("Voucher berhasil digunakan!");
+      } else {
+        showFlashMessage("Voucher sudah digunakan.");
+      }
+    }
+  </script>
+</body>
+</html>
+
+//** 2 **\\
+
+
+
+
+" => "Mie Burung Dara", "price" => 5000, "image" => "images/mie.jpg"],
+  ["id" => 3, "name" => "Beras Ramos", "price" => 74000, "image" => "images/beras.jpg"],
+  ["id" => 4, "name" => "Minyak Kita", "price" => 15000, "image" => "images/minyak.jpg"],
+  ["id" => 5, "name" => "Tepung Segitiga Biru", "price" => 12000, "image" => "images/tepung.jpg"],
+  ["id" => 6, "name" => "Kecap Manis ABC", "price" => 9000, "addOn" => true, "image" => "images/kecap.jpg"],
+  ["id" => 7, "name" => "Sarden ABC", "price" => 10000, "addOn" => true, "image" => "images/sarden.jpg"],
+];
+
+// Handle klaim voucher dari form POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['claim_voucher'])) {
+  $_SESSION['voucher_claimed'] = true;
+  header("Location: keranjang.php");
+  exit;
+}
+
+$voucherClaimed = isset($_SESSION['voucher_claimed']) && $_SESSION['voucher_claimed'] === true;
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Keranjang - MANAN MART</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="max-w-4xl mx-auto p-4">
+    <h1 class="text-2xl font-bold text-orange-500 mb-4">Keranjang Anda</h1>
+
+    <!-- Daftar Produk -->
+    <div class="bg-white p-4 rounded shadow mb-6">
+      <h2 class="text-lg font-semibold mb-2">Pilih Produk</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <?php foreach ($products as $product): ?>
+          <div class="border p-3 rounded flex justify-between items-center">
+            <div class="flex items-center gap-3">
+              <img src="<?= $product['image'] ?>" alt="<?= $product['name'] ?>" class="w-16 h-16 object-cover rounded">
+              <div>
+                <p class="font-semibold"><?= $product['name'] ?></p>
+                <p class="text-sm text-gray-500">Rp<?= number_format($product['price'], 0, ',', '.') ?></p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="updateProductQuantity(<?= $product['id'] ?>, -1)" class="px-2 bg-gray-200 rounded">-</button>
+              <span id="qty-<?= $product['id'] ?>">0</span>
+              <button onclick="updateProductQuantity(<?= $product['id'] ?>, 1)" class="px-2 bg-gray-200 rounded">+</button>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+
+    <!-- Ringkasan Keranjang -->
+    <div class="bg-white p-4 rounded shadow mb-4">
+      <h2 class="text-lg font-semibold mb-2">Ringkasan Belanja</h2>
+      <div id="cart-summary" class="space-y-2 text-sm text-gray-700"></div>
+      <div id="before-discount" class="text-right text-sm text-gray-600 hidden">
+        Total Sebelum Diskon: <span id="total-before">Rp0</span>
+      </div>
+      <div id="discount-amount" class="text-right text-sm text-green-600 hidden">
+        Diskon (20%): <span id="discount-value">Rp0</span>
+      </div>
+      <div class="flex justify-between items-center mt-2">
+        <span class="font-semibold">Total:</span>
+        <span class="font-bold text-lg">Rp<span id="total">0</span></span>
+      </div>
+    </div>
+
+    <!-- Voucher Klaim -->
+    <div class="bg-white p-4 rounded shadow mb-4">
+      <div class="flex items-center justify-between">
+        <span id="voucher-text">
+          <?php if ($voucherClaimed): ?>
+            Voucher Sudah Klaim (-20%)
+          <?php else: ?>
+            Gunakan Voucher Diskon 20%
+          <?php endif; ?>
+        </span>
+
+        <?php if ($voucherClaimed): ?>
+          <button disabled class="bg-gray-400 text-white px-4 py-2 rounded cursor-not-allowed">Sudah Klaim</button>
+        <?php else: ?>
+          <!-- Tombol klaim voucher berupa form POST agar tetap di satu halaman -->
+          <form method="POST" class="m-0 p-0">
+            <input type="hidden" name="claim_voucher" value="1">
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Klaim Voucher</button>
+          </form>
+        <?php endif; ?>
+      </div>
+    </div>
+
+    <!-- Checkout dan Alamat -->
+    <div class="bg-white p-4 rounded shadow mb-4">
+      <button onclick="goToAddress()" class="w-full bg-orange-500 text-white py-2 rounded">Lanjut ke Checkout</button>
+    </div>
+
+    <!-- Form Alamat -->
+    <div id="form-alamat" class="bg-white p-4 rounded shadow mb-4 hidden">
+      <h2 class="text-lg font-semibold mb-2">Alamat Pengiriman</h2>
+      <input id="nama" type="text" placeholder="Nama Penerima" class="w-full border px-3 py-2 mb-2 rounded">
+      <textarea id="alamat" placeholder="Alamat Lengkap" class="w-full border px-3 py-2 mb-2 rounded"></textarea>
+      <input id="hp" type="text" placeholder="No. HP" class="w-full border px-3 py-2 mb-2 rounded">
+
+      <!-- Metode Pembayaran -->
+      <h2 class="text-lg font-semibold mb-2 mt-4">Metode Pembayaran</h2>
+      <select class="w-full border px-3 py-2 mb-4 rounded">
+        <option>Transfer Bank</option>
+        <option>COD (Bayar di Tempat)</option>
+        <option>E-Wallet</option>
+      </select>
+
+      <button onclick="bayarSekarang()" class="w-full bg-green-600 text-white py-2 rounded">Bayar Sekarang</button>
+    </div>
+
+    <!-- Flash Message -->
+    <div id="flash-message" class="fixed bottom-5 right-5 bg-yellow-200 text-yellow-900 px-4 py-2 rounded shadow hidden"></div>
+  </div>
+
+<script>
+  const products = <?= json_encode($products); ?>;
+  const cart = {};
+  const voucherClaimed = <?= json_encode($voucherClaimed); ?>;
+
+  function updateProductQuantity(id, delta) {
+    cart[id] = (cart[id] || 0) + delta;
+    if (cart[id] < 0) cart[id] = 0;
+    document.getElementById(`qty-${id}`).innerText = cart[id];
+    renderCart();
+  }
+
+  function renderCart() {
+    const container = document.getElementById("cart-summary");
+    container.innerHTML = "";
+    let subtotal = 0;
+    for (const id in cart) {
+      const qty = cart[id];
+      if (qty <= 0) continue;
+      const product = products.find(p => p.id == id);
+      const harga = product.price * qty;
+      subtotal += harga;
+      const div = document.createElement("div");
+      div.textContent = `${qty} x ${product.name} = Rp${harga.toLocaleString("id-ID")}`;
+      container.appendChild(div);
+    }
+
+    let total = subtotal;
+    let discount = 0;
+
+    if (voucherClaimed) {
+      discount = Math.floor(subtotal * 0.2);
+      total -= discount;
+      document.getElementById("before-discount").classList.remove("hidden");
+      document.getElementById("discount-amount").classList.remove("hidden");
+      document.getElementById("total-before").innerText = subtotal.toLocaleString("id-ID");
+      document.getElementById("discount-value").innerText = discount.toLocaleString("id-ID");
+      document.getElementById("voucher-text").innerText = "Voucher Sudah Klaim (-20%)";
+    } else {
+      document.getElementById("before-discount").classList.add("hidden");
+      document.getElementById("discount-amount").classList.add("hidden");
+      document.getElementById("voucher-text").innerText = "Gunakan Voucher Diskon 20%";
+    }
+
+    document.getElementById("total").innerText = total.toLocaleString("id-ID");
+  }
+
+  function goToAddress() {
+    document.getElementById("form-alamat").classList.remove("hidden");
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+
+  function bayarSekarang() {
+    const nama = document.getElementById("nama").value.trim();
+    const alamat = document.getElementById("alamat").value.trim();
+    const hp = document.getElementById("hp").value.trim();
+
+    if (!nama || !alamat || !hp) {
+      showFlashMessage("Mohon lengkapi data alamat terlebih dahulu.");
+      return;
+    }
+
+    showFlashMessage("Pesanan Anda diproses. Terima kasih telah belanja di MANAN MART!");
+  }
+
+  function showFlashMessage(msg) {
+    const box = document.getElementById("flash-message");
+    box.innerText = msg;
+    box.classList.remove("hidden");
+    setTimeout(() => box.classList.add("hidden"), 3000);
+  }
+
+  renderCart();
+</script>
+</body>
+</html>
+
