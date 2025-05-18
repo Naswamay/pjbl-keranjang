@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Diskon 20%</title>
+    <style>
+        body {
+            background-color: #fff8dc;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .promo-container {
+            background-color: white;
+            width: 800px;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+        }
+        .promo-text {
+            max-width: 400px;
+        }
+        .promo-text h1 {
+            color: #cc0000;
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .promo-text h1 span {
+            color: #cc0000;
+        }
+        .promo-text p {
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+            margin: 10px 0 20px;
+        }
+        .promo-button {
+            background-color: #7a4b14;
+            color: white;
+            padding: 12px 24px;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .promo-image img {
+            max-height: 250px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="promo-container">
+    <div class="promo-text">
+        <h1>DISKON <span>20%</span></h1>
+        <p>untuk pengguna baru</p>
+        <a href="https://contohwebsite.com/diskon-pengguna-baru" target="_blank" class="promo-button">Dapatkan Diskon</a>
+    </div>
+    <div class="promo-image">
+        <img src="DISKON (1).png" alt="Produk Promo">
+    </div>
+</div>
+
+</body>
+</html>
