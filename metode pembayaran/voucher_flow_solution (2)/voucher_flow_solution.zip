@@ -1,0 +1,125 @@
+Berikut adalah implementasi lengkap untuk alur voucher sesuai permintaan Anda:
+
+1. **Halaman Klaim Voucher (diskon.html)** - Pengguna harus mengklaim voucher di sini sebelum kembali ke halaman keranjang  
+2. **Halaman Pembelian (modified_purchase_page.html)** - Mengaplikasikan diskon 20% jika voucher sudah diklaim  
+3. **Fungsi JavaScript** - Menangani alur klaim voucher, pengalihan halaman, dan penerapan diskon  
+
+Berikut adalah kode lengkap untuk kedua halaman:
+
+### diskon.html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Klaim Voucher</title>
+  <style>
+    /* Gaya tetap seperti sebelumnya */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="voucher-card">
+      <h2>20% OFF</h2>
+      <button id="claimBtn">Klaim Voucher</button>
+      <div id="status"></div>
+    </div>
+  </div>
+
+  <script>
+    const claimBtn = document.getElementById('claimBtn');
+    const statusDiv = document.getElementById('status');
+
+    claimBtn.addEventListener('click', function() {
+      // Nonaktifkan tombol setelah diklik
+      claimBtn.disabled = true;
+      // Tampilkan pesan sukses
+      statusDiv.textContent = 'Voucher Berhasil Diklaim';
+      // Setelah 2 detik, arahkan kembali ke halaman pembelian dengan parameter diskon
+      setTimeout(() => {
+        window.location.href = 'http://127.0.0.1:5501/modified_purchase_page.html?discount=20';
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
+
+### modified_purchase_page.html (potongan kode terkait voucher)
+<script>
+// Fungsi baru untuk membaca parameter URL
+function getUrlParameter(name) {
+  name = name.replace(/[[\]]/g, '\\$&');
+  const regex = new RegExp('[?&]' + name + '=([^&]*)');
+  const results = regex.exec(location.search);
+  return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+// Variabel untuk menyimpan status diskon
+let discountPercent = 0;
+
+// Cek parameter URL saat halaman dimuat
+const discountParam = getUrlParameter('discount');
+if (discountParam) {
+  discountPercent = parseInt(discountParam);
+}
+
+// Modifikasi fungsi updateCartUI untuk menangani diskon
+function updateCartUI() {
+  const note = document.getElementById("paymentNote");
+  const payBtn = document.getElementById("payBtn");
+  const totalTagihan = document.getElementById("totalTagihan");
+  note.innerHTML = "";
+  let total = 0;
+  const items = Object.values(cart);
+
+  if (items.length === 0) {
+    note.innerHTML = "Masukkan Belanjaanmu :)";
+    note.style.textAlign = "center";
+    payBtn.classList.remove("active");
+    payBtn.disabled = true;
+    totalTagihan.textContent = "";
+    return;
+  }
+
+  items.forEach(item => {
+    const subtotal = item.qty * item.price;
+    total += subtotal;
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <img src="${item.img}" />
+      <div class="cart-text">
+        <strong>${item.name}</strong><br>
+        Jumlah: ${item.qty}<br>
+        Total: ${formatRupiah(subtotal)}
+      </div>
+    `;
+    note.appendChild(div);
+  });
+
+  // Terapkan diskon jika ada
+  let displayTotal = total;
+  if (discountPercent > 0) {
+    displayTotal = total - (total * discountPercent / 100);
+  }
+
+  payBtn.classList.add("active");
+  payBtn.disabled = false;
+  totalTagihan.textContent = `Total: ${formatRupiah(displayTotal)}`;
+
+  // Jika diskon aktif, ubah tombol voucher jadi nonaktif dan beri tanda
+  const voucherBtn = document.querySelector('.voucher-total-container button');
+  if (discountPercent > 0) {
+    voucherBtn.textContent = `Voucher Digunakan (${discountPercent}% OFF)`;
+    voucherBtn.disabled = true;
+    voucherBtn.style.opacity = 0.5;
+    voucherBtn.style.cursor = 'not-allowed';
+  } else {
+    voucherBtn.textContent = 'Klaim Voucher';
+    voucherBtn.disabled = false;
+    voucherBtn.style.opacity = 1;
+    voucherBtn.style.cursor = 'pointer';
+  }
+}
+</script>
+
+Silakan coba file ini untuk melihat alur voucher yang sudah diperbarui. Jika ada hal lain yang ingin disesuaikan, beri tahu saya!

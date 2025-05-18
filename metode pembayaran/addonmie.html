@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pembelian</title>
+  <style>
+    body { margin: 0; font-family: sans-serif; }
+    .container { display: flex; height: 100vh; }
+    .left, .right { flex: 1; padding: 20px; box-sizing: border-box; }
+    .left { background: #f9f9f9; border-right: 1px solid #ccc; }
+    .right { background: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+    .header { font-weight: bold; font-size: 24px; margin-bottom: 20px; }
+    .search { width: 100%; padding: 8px; margin-bottom: 10px; }
+    .add-new { color: green; cursor: pointer; margin-bottom: 10px; display: inline-block; }
+    .buttons { margin-bottom: 10px; }
+    .buttons button { margin-right: 10px; }
+    .product-card {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .product-info { display: flex; align-items: center; }
+    .product-info img { width: 60px; margin-right: 10px; }
+    .controls { display: flex; align-items: center; gap: 10px; }
+    .payment-header { background: orange; color: white; padding: 10px; font-weight: bold; font-size: 20px; }
+    .payment-body {
+      flex-grow: 1;
+      padding: 20px;
+      font-style: italic;
+      color: gray;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .payment-footer {
+      padding: 20px;
+    }
+    .pay-button {
+      width: 100%;
+      background: #fecd8e;
+      border: none;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      opacity: 0.5;
+    }
+    .pay-button.active { opacity: 1; background: orange; }
+
+    .cart-item {
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-style: normal;
+      color: black;
+      max-width: 100%;
+    }
+    .cart-item img {
+      width: 60px;
+      margin-right: 10px;
+    }
+    .cart-text {
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Pembelian -->
+    <div class="left">
+      <div class="header">Pembelian</div>
+      <input type="text" class="search" placeholder="Cari nama barang" />
+      <div class="add-new">+ Tambah Barang Baru</div>
+      <div class="buttons">
+        <button>Semua</button>
+      </div>
+      <div class="product-card">
+        <div class="product-info">
+          <img src="OIP.webp" alt="Mie Burung Dara" />
+          <div>
+            <strong>Mie Burung Dara</strong><br>
+            Rp 5.000,00
+          </div>
+        </div>
+        <div class="controls">
+          <button onclick="updateQty(-1)">-</button>
+          <span id="qty">0</span>
+          <button onclick="updateQty(1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pembayaran -->
+    <div class="right">
+      <div class="payment-header">Pembayaran</div>
+      <div class="payment-body" id="paymentNote">
+        Masukkan Belanjaanmu :)
+      </div>
+      <div class="payment-footer">
+        <button class="pay-button" id="payBtn" disabled>Bayar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let quantity = 0;
+    const hargaSatuan = 5000;
+
+    function updateQty(change) {
+      quantity = Math.max(0, quantity + change);
+      document.getElementById('qty').textContent = quantity;
+
+      const paymentNote = document.getElementById('paymentNote');
+      const payBtn = document.getElementById('payBtn');
+
+      if (quantity > 0) {
+        paymentNote.innerHTML = `
+          <div class="cart-item">
+            <img src="OIP.webp" />
+            <div class="cart-text">
+              <strong>Mie Burung Dara</strong><br>
+              Jumlah: ${quantity}<br>
+              Total: Rp ${(quantity * hargaSatuan).toLocaleString('id-ID')}
+            </div>
+          </div>
+        `;
+        paymentNote.style.fontStyle = "normal";
+        paymentNote.style.color = "black";
+        paymentNote.style.textAlign = "left";
+        payBtn.classList.add("active");
+        payBtn.disabled = false;
+      } else {
+        paymentNote.innerHTML = "Masukkan Belanjaanmu :)";
+        paymentNote.style.fontStyle = "italic";
+        paymentNote.style.color = "gray";
+        paymentNote.style.textAlign = "center";
+        payBtn.classList.remove("active");
+        payBtn.disabled = true;
+      }
+    }
+  </script>
+</body>
+</html>

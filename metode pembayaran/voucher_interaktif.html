@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Voucher Diskon Interaktif</title>
+  <style>
+    body {
+      background-color: #fff8dc;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .promo-container {
+      background-color: white;
+      width: 600px;
+      padding: 30px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+      text-align: center;
+      border-radius: 8px;
+    }
+    h1 {
+      color: #cc0000;
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 20px;
+      font-weight: bold;
+      color: #000;
+      margin-bottom: 30px;
+    }
+    button.promo-button {
+      background-color: #7a4b14;
+      color: white;
+      padding: 15px 40px;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+    }
+    button.promo-button:disabled {
+      background-color: #a67c4a;
+      cursor: not-allowed;
+    }
+    #message {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      color: green;
+      min-height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="promo-container">
+    <h1>DISKON 20%</h1>
+    <p>Untuk pengguna baru</p>
+    <button id="claimBtn" class="promo-button">Dapatkan Diskon</button>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    const claimBtn = document.getElementById('claimBtn');
+    const messageDiv = document.getElementById('message');
+    const voucherCode = 'DISKON20';
+
+    claimBtn.addEventListener('click', () => {
+      claimBtn.disabled = true;
+      claimBtn.textContent = 'Menerapkan...';
+      messageDiv.textContent = '';
+
+      // Simulasi proses klaim voucher
+      setTimeout(() => {
+        messageDiv.textContent = 'Berhasil digunakan';
+        localStorage.setItem('appliedVoucher', voucherCode);
+
+        // Redirect ke halaman keranjang, data tetap
+        setTimeout(() => {
+          window.location.href = 'nas.html';
+        }, 1200);
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
